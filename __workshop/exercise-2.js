@@ -9,30 +9,35 @@
 // 3. Once you have it working, pass it a few address to see what the responses look like.
 // 4. Make sure to only return an object with lat/lng and not the whole response
 
-const opencage = require('opencage-api-client');
-
+const opencage = require("opencage-api-client");
 
 function getAddressPosition(address) {
-    const requestObj = {
-        key: '1315122032774d06b34c570f3bd70f7b',
-        q: address
-    };
+  const requestObj = {
+    key: "d3796c6f01f647f9aae0d80228978ff1",
+    q: address
+  };
 
-    return opencage.geocode(requestObj)
-        .then(data => {
-            // if (data.status.code == 200) {
-                // if (data.results.length > 0) {
-                    const place = data.results[0];
-                    // console.log(place.geometry);
-                    return place;
-                // }
-            // } else {
-            //     // other possible response codes:
-            //     // https://opencagedata.com/api#codes
-            //     console.log('error', data.status.message);
-            // }
-        })
-        .catch(error => console.log('error', error.message));
+  return opencage
+    .geocode(requestObj)
+    .then(data => {
+      if (data.status.code == 200) {
+        if (data.results.length > 0) {
+          const place = data.results[0];
+          console.log(place.geometry);
+          return place.geometry;
+        }
+      } else {
+        // other possible response codes:
+        // https://opencagedata.com/api#codes
+        console.log("error", data.status.message);
+      }
+    })
+    .catch(error => console.log("error", error.message));
 }
 
-console.log(getAddressPosition('1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8'));
+getAddressPosition('1455 Boulevard de Maisonneuve O, Montréal, QC H3G 1M8');
+
+module.exports = {
+    getAddressPosition
+}
+

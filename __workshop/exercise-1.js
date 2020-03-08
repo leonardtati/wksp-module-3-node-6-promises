@@ -9,11 +9,25 @@
 //      Return them as `lat` and `lng` instead.
 
 // require the 'request-promise' module.
-
+const rp = require('request-promise');
 
 // Returns the current position of the ISS
-function getIssPosition() {
+ function getIssPosition() {
+    return rp('http://api.open-notify.org/iss-now.json')
 
+    .then(data=>{
+        const position = JSON.parse(data)
+
+        return{
+            lng: position.iss_position.longitude,
+            lat: position.iss_position.latitude,
+        }
+        
+    })  
+    .then(res=> console.log(res))
+ }
+//getIssPosition();
+
+module.exports = {
+    getIssPosition
 }
-
-// psst.... don't forget to call the function
